@@ -5,6 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 
+import com.CodeWithSumit.Task_Management.Dto.SignupRequest;
+import com.CodeWithSumit.Task_Management.Dto.UserDto;
 import com.CodeWithSumit.Task_Management.Entity.User;
 import com.CodeWithSumit.Task_Management.Enums.UserRole;
 import com.CodeWithSumit.Task_Management.Repository.UserRepository;
@@ -37,5 +39,28 @@ public class AuthServiceimpl implements Authservice  {
         }
 
     }
+
+
+	@Override
+	public UserDto signupUser(SignupRequest signupRequest) {
+		// TODO Auto-generated method stub
+		
+		User user= new User();
+		user.setEmail(signupRequest.getEmail());
+		user.setName(signupRequest.getName());
+		user.setPassword(new BCryptPasswordEncoder().encode(signupRequest.getPassword()));
+		user.setUserRole(UserRole.EMPLOYEE);
+		User createdUser= userRepository.save(user);		
+		return createdUser.getUserDto();
+		
+	}
+
+
+	@Override
+	public boolean hasUserWithEmail(String email) {
+		// TODO Auto-generated method stu
+		
+		return userRepository.findFirstByEmail(email).isPresent() ;
+	}
 
 }

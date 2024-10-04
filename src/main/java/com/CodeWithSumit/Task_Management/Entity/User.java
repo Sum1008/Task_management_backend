@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.CodeWithSumit.Task_Management.Dto.UserDto;
 import com.CodeWithSumit.Task_Management.Enums.UserRole;
 
 import jakarta.persistence.Entity;
@@ -67,6 +68,16 @@ public class User implements UserDetails {
         return true;
     }
 
+    
+    public UserDto getUserDto() {
+    	UserDto userDto =new UserDto();
+    	userDto.setId(id);
+    	userDto.setName(name);
+    	userDto.setEmail(email);
+    	userDto.setUserRole(userRole);
+    	return userDto;
+    	
+    }
 
     
 
