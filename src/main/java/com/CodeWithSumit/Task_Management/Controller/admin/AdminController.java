@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.CodeWithSumit.Task_Management.Dto.CommentDTO;
 import com.CodeWithSumit.Task_Management.Dto.TaskDTO;
 import com.CodeWithSumit.Task_Management.Service.admin.AdminService;
 import java.util.*;
@@ -75,6 +77,23 @@ public class AdminController {
     public ResponseEntity<List<TaskDTO>> searchTask(@PathVariable String title){
         return ResponseEntity.ok(adminService.searchTaskByTitle(title));
 
+    }
+
+    @PostMapping("/task/comment/{taskId}")
+    public ResponseEntity<CommentDTO> createComment(@PathVariable Long taskId,@RequestParam String content){
+        CommentDTO createdCommentDTO =adminService.createComment(taskId,content);
+        if(createdCommentDTO==null){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }else{
+            return  ResponseEntity.status(HttpStatus.CREATED).body(createdCommentDTO);
+
+        }
+    }
+
+
+    @GetMapping("/comments/{taskId}")
+    public ResponseEntity<List<CommentDTO>>getCommentsByTakId(@PathVariable Long taskId){
+        return ResponseEntity.ok(adminService.getCommentByTaskId(taskId));
     }
 
 }

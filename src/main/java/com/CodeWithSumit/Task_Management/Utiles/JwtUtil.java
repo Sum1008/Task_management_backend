@@ -16,7 +16,11 @@ import java.util.Map;
 import java.security.Key;
 import java.util.Date;
 @Component
+@RequiredArgsConstructor
 public class JwtUtil {
+
+    private final UserRepository userRepository;
+
 
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);
@@ -70,11 +74,7 @@ public class JwtUtil {
 
     }
 
- 
+    public User get
 
-   
-
-
-
-
+    
 }
